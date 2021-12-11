@@ -1,7 +1,7 @@
 {
   "name": "weather-full-stack",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Basic jQuery, NodeJS &amp; MongoDB project template",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -17,5 +17,13 @@
     "moment": "^2.23.0",
     "mongoose": "^5.4.0",
     "request": "^2.88.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mostfamm/full-stack-project-template.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Mostfamm/full-stack-project-template/issues"
+  },
+  "homepage": "https://github.com/Mostfamm/full-stack-project-template#readme"
 }

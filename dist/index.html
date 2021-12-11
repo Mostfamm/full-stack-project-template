@@ -2,20 +2,23 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>WhetherWeather</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
-        crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>WhetherWeather</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+    integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+
 
 </head>
 
 <body>
- 
-    <script id="logIn-template" type="text/x-handlebars-template">   
+
+  <script id="logIn-template" type="text/x-handlebars-template">
 
         <div class="logInFormat">  
           <div class="imgcontainer">
@@ -40,8 +43,8 @@
           </div>
         </div>
     </script>
-  
-    <script id="Register-template" type="text/x-handlebars-template">   
+
+  <script id="Register-template" type="text/x-handlebars-template">
       <form name="my Form" method="post">
         <div class="RegisterFormat">
           <div class="imgcontainer">
@@ -93,18 +96,76 @@
         </div>
       </form>
     </script>
-  
-  
-    <script id="user-template" type="text/x-handlebars-template">
 
+
+  <script id="user-template" type="text/x-handlebars-template">
+     
+    <!-- {{#each jobs}}
+    <main>   
+      <section class="glass">
+        <div class="dashboard">
+  
+          <div class="links">
+            <div class="link">
+              <h2>{{CompanyName}}</h2>
+            </div>
+            <div class="link">
+              <h2>{{JobTitle}}</h2>
+            </div>
+            <div class="link">
+              <h2>{{Location}}</h2>
+            </div>
+            <div class="link">
+              <h2>{{gotJob}}</h2>
+            </div>
+          </div>
+  
+        </div>
+        <div class="carditems">
+          <div class="status">
+            <h1>Interviews</h1>
+          </div>
+          {{#each interviews}}
+          <div class="cards">
+            <div class="card">
+              <div class="card-info">
+                <div class="parent">
+                  <div class="div1"><h3>{{interviewType}}</h3></div>
+                  <div class="div2"> <h3>{{interviewDate}}</h3></div>
+                  <div class="div3"> <h3>{{interviewerName}}</h3></div>
+                  <div class="div4"> </div>
+                  </div>
+              </div>
+            </div>
+  
+          </div>
+          {{/each}}
+        </div>
+      </section>
+    </main>
+      {{/each}} -->
     
+     <div class="parent">
     
         <div class="ApplyingNewJob">
-          <button id="Apply">Applying for a new job</button>
-          <div class="container"> 
+          <div id="addInterview"   >
+            <label for="uname"><b>Interview type</b></label>
+            <input type="text" placeholder="Enter Interview Type" id="interviewType"  required>
+      
+            <label for="uname"><b>Interview date</b></label>
+            <input type="date" placeholder="Enter Interview Date" id="interviewDate"  required>
+      <br>
+            <label for="uname"><b>Interviewer name</b></label>
+            <input type="text" placeholder="Interviewer Name" id="interviewerName"  required>
+      
+           
+                <button id="ApplyInterview">Add</button> 
+          </div>
+         
+          <div id="addJop" class="container" > 
       
             <label for="uname"><b>Company Name</b></label>
-            <input type="text" placeholder="Enter Company Name" id="CompanyName"  required>
+            <input type="text" placeholder="Enter Company Name" id="CompanyName" style="display: block"  required>
       
             <label for="uname"><b>Job title</b></label>
             <input type="text" placeholder="Enter Job title" id="JobTitle"  required>
@@ -119,31 +180,63 @@
                   <option value="friend bings friend">friend bings friend</option>
                   <option value="other">other</option>
                 </select>
-              
+                <button id="Apply">Applying for a new job</button>   
           </div>
         </div>
       
-        {{#each jobs}}
-        <h3>Company Name : {{CompanyName}}</h3>
-        <h3>JobTitle : {{JobTitle}}</h3>
-        <h3>Location : {{Location}}</h3>
-        <h3>gotJob :  {{gotJob}}</h3>
+        <div class="div2">
+        
+          {{#each jobs}}
+          <div class="card" style="width: 90%;">
+            <div class="card-header">
+              <center><h1>job</h1></center>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+          <div class="job" id="{{_id}}">
+         
+          <h3 >Company Name : {{CompanyName}}</h3>
+          <h3>JobTitle : {{JobTitle}}</h3>
+          <h3>Location : {{Location}}</h3>
+          <h3>gotJob :  {{gotJob}}</h3>
+          <br>
+          <button class="addNewInterview" >Add a new interview</button>
+        </li><li class="list-group-item">
+         <center><h2>interviews</h2></center> 
+          {{#each interviews}}
+          <div id="interviews">
+          <h3>interviewType:{{interviewType}}</h3>
+          <h3>interviewDate:{{interviewDate}}</h3>
+          <h3>interviewerName:{{interviewerName}}</h3>
+          
+        </div>
+        <br><br>
+      
+          {{/each}}
+        </li>
+        </div>
         <br>
-        <button >Add a new interview</button>
-        {{/each}}
-      
-        </script>
-      
+      </ul>
+          {{/each}}
+        </div>
+      </div>
 
-        <div class="logIn-Register"></div>
-        <div class="user"></div>
-        <div class="userInterview"></div>
-              
-    <script src="./jquery/dist/jquery.js"></script>
-    <script src="./handlebars/dist/handlebars.js"></script>
-    <script src="DataModel.js"></script>
-    <script src="Renderer.js"></script>
-    <script src="main.js"></script>
+    </div> 
+         
+        
+        </script>
+
+
+  <div class="logIn-Register"></div>
+  <div class="user"></div>
+  <div class="userInterview"></div>
+
+  <script src="./jquery/dist/jquery.js"></script>
+  <script src="./handlebars/dist/handlebars.js"></script>
+  <script src="DataModel.js"></script>
+  <script src="Renderer.js"></script>
+  <script src="main.js"></script>
+
 </body>
 
 

@@ -1,7 +1,6 @@
 const dataModel = new DataModel()
 const renderer = new Renderer()
-
-
+let jobId
 
 loadPage =async function(){
     renderer.viewLogIn();
@@ -25,6 +24,7 @@ $('.logIn-Register').on('click','#Login' , async function() {
         alert("the user is exist")
 //      window.location.href= "user.html";
         await dataModel.getJob();
+        await dataModel.getInterview();
         renderer.emptyView();
         renderer.viewUser(dataModel.jobs); 
     }else{
@@ -66,15 +66,38 @@ $('.userInterview').on('click','#Apply' , async function() {
     const JobTitle = $(this).closest(".ApplyingNewJob").find("div").find("#JobTitle").val()
     const Location = $(this).closest(".ApplyingNewJob").find("div").find("#Location").val()
     const gotJob = $(this).closest(".ApplyingNewJob").find("div").find("select")[0].value
-
     if( CompanyName =="" ||JobTitle == "" ||  Location =="" || gotJob == "" ){
         alert("the inputs is require ")
     }
     else{
         await dataModel.saveJob(CompanyName , JobTitle , Location , gotJob);
         renderer.emptyView();
+        
         renderer.viewUser(dataModel.jobs); 
     }
+})
+$('.userInterview').on('click','#ApplyInterview' , async function() {
+   
+    const interviewType = $(this).closest(".ApplyingNewJob").find("div").find("#interviewType").val()
+    const interviewDate = $(this).closest(".ApplyingNewJob").find("div").find("#interviewDate").val()
+    const interviewerName = $(this).closest(".ApplyingNewJob").find("div").find("#interviewerName").val()
+    if( interviewType =="" ||interviewDate == "" ||  interviewerName ==""){
+        alert("the inputs is require ")
+    }
+    else{
+        await dataModel.saveInterview(jobId , interviewType , interviewDate , interviewerName);
+        await dataModel.getInterview();
+        renderer.emptyView();
+        renderer.viewUser(dataModel.jobs); 
+    }
+    
+ //  console.log($(this).parent().attr('id'));
+})
+$('.userInterview').on('click','.addNewInterview' , async function() {
+   $(this).closest(".parent").find("div").find("#addJop").hide();
+   $(this).closest(".parent").find("div").find("#addInterview").show();
+   jobId=$(this).parent().attr('id'); 
+      
 })
 
 loadPage();
