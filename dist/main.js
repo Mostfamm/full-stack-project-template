@@ -30,7 +30,7 @@ $('.logIn-Register').on('click','#Login' , async function() {
     }else{
         alert("the user is not exist")
     }    
-})
+})  
 
 
 $('.logIn-Register').on('click','#registerbtn' , async function() {

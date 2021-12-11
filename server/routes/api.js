@@ -95,7 +95,3 @@ router.get('/interview/:id', function (req, res) {
 
 
 module.exports = router
-
-
-
-
