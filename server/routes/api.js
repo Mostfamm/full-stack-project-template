@@ -63,7 +63,3 @@ router.get('/job/:email', function (req, res) {
 
 
 module.exports = router
-
-
-
-
