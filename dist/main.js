@@ -26,7 +26,13 @@ $('.logIn-Register').on('click','#Login' , async function() {
         await dataModel.getJob();
         await dataModel.getInterview();
         renderer.emptyView();
-        renderer.viewUser(dataModel.jobs); 
+        if(dataModel.userData[0].isAdmin){
+            await dataModel.getAllUsers()
+            renderer.viewAdmin(dataModel.users);
+        }else{
+            renderer.viewUser(dataModel.jobs); 
+        }
+
     }else{
         alert("the user is not exist")
     }    
@@ -58,8 +64,6 @@ $('.logIn-Register').on('click','#registerbtn' , async function() {
         }
     }
 })
-
-
 $('.userInterview').on('click','#Apply' , async function() {
    
     const CompanyName = $(this).closest(".ApplyingNewJob").find("div").find("#CompanyName").val()
@@ -99,5 +103,16 @@ $('.userInterview').on('click','.addNewInterview' , async function() {
    jobId=$(this).parent().attr('id'); 
       
 })
+
+
+$('.admin').on('click','#getUserData' , async function() {
+    const status = $(this).closest(".FilterBy").find("div").find("select")[0].value
+    const cycle = $(this).closest(".FilterBy").find("div").find("select")[1].value
+
+    await dataModel.getUsers(status , cycle );
+    renderer.emptyView();
+    renderer.viewAdmin(dataModel.users);
+})
+
 
 loadPage();

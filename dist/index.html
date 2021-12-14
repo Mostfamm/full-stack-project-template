@@ -145,8 +145,13 @@
     </main>
       {{/each}} -->
     
+     
+
+
+
      <div class="parent">
-    
+     
+
         <div class="ApplyingNewJob">
           <div id="addInterview"   >
             <label for="uname"><b>Interview type</b></label>
@@ -154,7 +159,7 @@
       
             <label for="uname"><b>Interview date</b></label>
             <input type="date" placeholder="Enter Interview Date" id="interviewDate"  required>
-      <br>
+            <br>
             <label for="uname"><b>Interviewer name</b></label>
             <input type="text" placeholder="Interviewer Name" id="interviewerName"  required>
       
@@ -162,7 +167,7 @@
                 <button id="ApplyInterview">Add</button> 
           </div>
          
-          <div id="addJop" class="container" > 
+          <div id="addJop" class="con tainer" > 
       
             <label for="uname"><b>Company Name</b></label>
             <input type="text" placeholder="Enter Company Name" id="CompanyName" style="display: block"  required>
@@ -220,18 +225,59 @@
           {{/each}}
         </div>
       </div>
-
     </div> 
          
         
         </script>
 
 
+        <script id="admin-template" type="text/x-handlebars-template">
+          <div class="FilterBy">
+            <div id="FilterByData" >
+              <label for="status"><b>status</b></label>
+                <select name="status" id="status">
+                  <option value="ALL">ALL</option>
+                  <option value="student">student</option>
+                  <option value="GraduateBootcamp">Graduate bootcamp</option>
+                  <option value="Employee">Employee</option>
+                </select>
+              <label for="cycle"><b>cycle</b></label>
+                <select name="status" id="status">
+                  <option value="ALL">ALL</option>
+                  <option value="Atidna 1">Atidna 1</option>
+                  <option value="Atidna 2">Atidna 2</option>
+                  <option value="Atidna 3">Atidna 3</option>
+                  <option value="Atidna 4">Atidna 4</option>
+                </select>  
+              <button id="getUserData">search !</button>
+            </div>              
+          </div>
+          <div class="div2">
+        
+            
+            <table style="float:right">
+              <tr>
+                <th>first name</th>
+                <th>last name</th>
+                <th>status</th>
+                <th>cycle</th>
+              </tr>
+              {{#each users}}
+              <tr>
+                <td>{{firstName}}</td>
+                <td>{{lastName}}</td>
+                <td>{{status}}</td>
+                <td>{{cycle}}</td>
+              </tr>
+              {{/each}}
+            </table>
 
+          </div>
+          </script>
   <div class="logIn-Register"></div>
   <div class="user"></div>
   <div class="userInterview"></div>
-
+  <div class="admin"></div>
   <script src="./jquery/dist/jquery.js"></script>
   <script src="./handlebars/dist/handlebars.js"></script>
   <script src="DataModel.js"></script>

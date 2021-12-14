@@ -5,6 +5,7 @@ const jobSchema = new Schema({
     CompanyName : String,
     JobTitle  : String,
     Location    : String,
+    gotJob :   String ,
     interviews : [{type: Schema.Types.ObjectId, ref: 'interview'}]
 
 })

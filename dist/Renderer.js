@@ -8,9 +8,14 @@ class Renderer {
         this.templateRegister = Handlebars.compile(this.sourceRegister)
         this.sourceUser = $('#user-template').html()
         this.templateUser = Handlebars.compile(this.sourceUser)
+        this.sourceAdmin = $('#admin-template').html()
+        this.templateAdmin = Handlebars.compile(this.sourceAdmin)
+
+
 
         this.element = $(".logIn-Register");
         this.elementUser =  $(".userInterview");
+        this.elementAdmin = $(".admin")
     }
 
 //    renderData (data) {
@@ -31,12 +36,14 @@ class Renderer {
         let someHTML = this.templateUser({jobs});
         this.elementUser.append(someHTML);    
     }
-    viewAdmin(){
-
+    viewAdmin(users){
+        let someHTML = this.templateAdmin({users});
+        this.elementAdmin.append(someHTML); 
     }
     emptyView(){
         this.element.empty();
         this.elementUser.empty();
+        this.elementAdmin.empty();
     }
 
 

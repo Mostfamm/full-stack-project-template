@@ -3,11 +3,18 @@ class DataModel {
         this.userData = {}
         this.jobs = []
         this.interviews = []
+        this.users = []
     }
 
-    getUsers = async function () {
-        data = await $.get(`/user`)
-        console.log(data);
+    
+    getAllUsers = async function () {
+        const data =await  $.get('/users')
+        this.users = data;
+    }
+
+    getUsers = async function (status , cycle ) {
+        const data =await  $.get(`/users/${status}/${cycle}`)
+        this.users = data;
     }
 
     userIsExist = async function (email, password) {

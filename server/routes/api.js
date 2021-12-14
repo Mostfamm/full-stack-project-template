@@ -9,6 +9,51 @@ router.get('/user/:email', function (req, res) {
         res.send(user)
     })
 })
+
+//   $.get(`/users/${status}/${cycle}/${gotJob}/${companyName}`)
+
+
+router.get('/users', function (req, res){
+    User.find(({}), function (err, users) {
+        res.send(users)
+    })
+})
+router.get('/users/:status/:cycle', function (req, res){
+    const status = req.params.status
+    const cycle = req.params.cycle
+    if(status == "ALL" && cycle == "ALL"){
+        User.find(({}), function (err, users) {
+            res.send(users)
+        })
+    }else if(cycle == "ALL"){
+        User.find(({ status: status}), function (err, users) {
+            res.send(users)
+        })
+        
+    }else if(status == "ALL"){
+        User.find(({  cycle: cycle }), function (err, users) {
+            res.send(users)
+        })
+    }else {
+        User.find(({ status: status, cycle: cycle }), function (err, users) {
+            res.send(users)
+        })
+    }
+
+
+
+/* 
+    User.find(( {
+        $and: [
+            { $or : [ {status : { $exists: false }}, {status : { status }}] } ,
+            { $or : [ {cycle : { $exists: false }}, {cycle : { cycle }}] } 
+        ]}
+    ), function (err, users) {
+        res.send(users)
+    })
+*/
+})
+
 router.get('/user/:password/:email', function (req, res) {
     const email = req.params.email
     const password = req.params.password
@@ -26,7 +71,8 @@ router.post('/user', function (req, res) {
         status: req.body.status,
         cycle: req.body.cycle,
         mobileNo: req.body.mobileNo,
-        password: req.body.password
+        password: req.body.password,
+        isAdmin : false
 
     })
     user.save()
@@ -90,7 +136,6 @@ router.get('/interview/:id', function (req, res) {
             console.log(job)
             res.send(job.interviews)
         })
-
 })
 
 
