@@ -103,7 +103,3 @@ router.post('/editinterview', function (req,res) {
 })
 
 module.exports = router
-
-
-
-
