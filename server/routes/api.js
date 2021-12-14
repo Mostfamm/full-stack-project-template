@@ -93,6 +93,14 @@ router.get('/interview/:id', function (req, res) {
 
 })
 
+router.post('/editinterview', function (req,res) {
+    Interview.updateOne(
+        {_id: req.body.id},
+        {isPassed : req.body.isPassed } , function(err,affected,resp){
+         // console.log(err);
+        }
+        );
+})
 
 module.exports = router
 

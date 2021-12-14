@@ -99,53 +99,109 @@
 
 
   <script id="user-template" type="text/x-handlebars-template">
-     
-    <!-- {{#each jobs}}
+    <button class="addNewJob" >Add a new job</button>
+    <div class="Popup">
+      <div class="formPopup" id="popupForm">
+        <div  class="formContainer" >
+          <label for="uname"><b>Company Name</b></label>
+            <input type="text" placeholder="Enter Company Name" id="CompanyName" style="display: block"  required>
+      
+            <label for="uname"><b>Job title</b></label>
+            <input type="text" placeholder="Enter Job title" id="JobTitle"  required>
+      
+            <label for="uname"><b>Location</b></label>
+            <input type="text" placeholder="Enter Location" id="Location"  required>
+      
+            <label for="cycle"><b>How she got the job</b></label>
+                <select name="gotJob" id="gotJob">
+                  <option value="LinkedIn">LinkedIn</option>
+                  <option value="faceBook">faceBook</option>
+                  <option value="friend bings friend">friend bings friend</option>
+                  <option value="other">other</option>
+                </select>
+                <button id="Apply">Applying for a new job</button> 
+          <button type="button" class="btn cancel" id="cancel" >Close</button>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="Popup" >
+      <div class="formPopup" id="popupForm2">
+        <div  class="formContainer" >
+          <h2>Add Interview</h2>
+          <label for="uname"><b>Interview type</b></label>
+          <input type="text" placeholder="Enter Interview Type" id="interviewType"  required>
+          <label for="uname"><b>Interview date</b></label>
+          <input type="date" placeholder="Enter Interview Date" id="interviewDate"  required>
+    <br>
+          <label for="uname"><b>Interviewer name</b></label>
+          <input type="text" placeholder="Interviewer Name" id="interviewerName"  required>
+              <button id="ApplyInterview">Add</button> 
+          <button type="button" class="btn cancel" id="cancel2" >Close</button>
+        </div>
+      </div>
+    </div>
+    {{#each jobs}}
     <main>   
       <section class="glass">
         <div class="dashboard">
   
           <div class="links">
             <div class="link">
+              <h2>CompanyName</h2>
               <h2>{{CompanyName}}</h2>
             </div>
             <div class="link">
+              <h2>JobTitle</h2>
+              <br>
               <h2>{{JobTitle}}</h2>
             </div>
             <div class="link">
+              <h2>Location</h2>
               <h2>{{Location}}</h2>
             </div>
             <div class="link">
+              <h2>gotJob</h2>
               <h2>{{gotJob}}</h2>
             </div>
           </div>
   
         </div>
+        
         <div class="carditems">
-          <div class="status">
+          <div class="status" id="{{_id}}">
+            <button class="addNewInterview" >Add a new interview</button>
             <h1>Interviews</h1>
           </div>
           {{#each interviews}}
           <div class="cards">
             <div class="card">
-              <div class="card-info">
+              <div class="card-info" id="{{_id}}">
                 <div class="parent">
-                  <div class="div1"><h3>{{interviewType}}</h3></div>
-                  <div class="div2"> <h3>{{interviewDate}}</h3></div>
-                  <div class="div3"> <h3>{{interviewerName}}</h3></div>
-                  <div class="div4"> </div>
+                  <div class="div1"><h3>interviewType: {{interviewType}}</h3></div>
+                  <div class="div2"> <h3>interviewDate: {{interviewDate}}</h3></div>
+                  <div class="div3"> <h3>interviewerName: {{interviewerName}}</h3></div>
+                  <div class="div4">
+                    <p>{{isPassed}}</p>
+                    
+                    
+                   </div>
                   </div>
+                  <button  id="pass">pass</button> 
+                 <button  id="fail">fail</button>
               </div>
             </div>
-  
+                
           </div>
           {{/each}}
         </div>
       </section>
     </main>
-      {{/each}} -->
+      {{/each}}
     
-     <div class="parent">
+     <!-- <div class="parent">
     
         <div class="ApplyingNewJob">
           <div id="addInterview"   >
@@ -221,7 +277,7 @@
         </div>
       </div>
 
-    </div> 
+    </div>  -->
          
         
         </script>
