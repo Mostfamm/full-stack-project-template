@@ -6,7 +6,7 @@ const userSchema = new Schema({
     lastName  : String,
     email     : String,
     status    : String,
-    cycle     : String,
+    cycle     : String, //enum
     mobileNo  : String,
     password  : String,
     isAdmin   : Boolean,
