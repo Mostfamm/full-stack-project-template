@@ -28,7 +28,7 @@ $('.logIn-Register').on('click', '#Login', async function () {
         renderer.emptyView();
         if(dataModel.userData[0].isAdmin){
             await dataModel.getAllUsers()
-            renderer.viewAdmin(dataModel.users);
+            renderer.viewAdmin(dataModel.users , dataModel.Statistics);
         }else{
             renderer.viewUser(dataModel.jobs); 
         }
@@ -85,7 +85,6 @@ $('.userInterview').on('click', '#Apply', async function () {
 $('.userInterview').on('click', '#ApplyInterview', async function () {
 
     const interviewType = $(this).closest(".Popup").find("div").find("#interviewType").val()
-    console.log(interviewType);
     const interviewDate = $(this).closest(".Popup").find("div").find("#interviewDate").val()
     const interviewerName = $(this).closest(".Popup").find("div").find("#interviewerName").val()
     if (interviewType == "" || interviewDate == "" || interviewerName == "") {
@@ -137,8 +136,18 @@ $('.admin').on('click','#getUserData' , async function() {
 
     await dataModel.getUsers(status , cycle );
     renderer.emptyView();
+    renderer.viewAdmin(dataModel.users , dataModel.Statistics);
+})
+
+$('.admin').on('click','#usersNotYetBeenInterviewed' , async function() {
+
+    await dataModel.getUsersNotYetBeenInterviewed();
+    renderer.emptyView();
     renderer.viewAdmin(dataModel.users);
 })
 
 
+
 loadPage();
+
+

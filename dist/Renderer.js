@@ -11,11 +11,14 @@ class Renderer {
         this.sourceAdmin = $('#admin-template').html()
         this.templateAdmin = Handlebars.compile(this.sourceAdmin)
 
-
+        this.sourceAdminStatistics = $('#adminStatistics-template').html()
+        this.templateAdminStatistics = Handlebars.compile(this.sourceAdminStatistics)
 
         this.element = $(".logIn-Register");
         this.elementUser =  $(".userInterview");
         this.elementAdmin = $(".admin")
+        this.elementAdminStatistics = $(".admin")
+
     }
 
 //    renderData (data) {
@@ -36,9 +39,14 @@ class Renderer {
         let someHTML = this.templateUser({jobs});
         this.elementUser.append(someHTML);    
     }
-    viewAdmin(users){
-        let someHTML = this.templateAdmin({users});
-        this.elementAdmin.append(someHTML); 
+    viewAdmin(users , Statistics){
+        let someHTML = this.templateAdmin({users} );
+        let someHTML1 = this.templateAdminStatistics({Statistics});
+
+        this.elementAdmin.append(someHTML  ); 
+        this.elementAdminStatistics.append(someHTML1 ); 
+
+        
     }
     emptyView(){
         this.element.empty();

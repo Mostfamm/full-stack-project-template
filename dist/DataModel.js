@@ -4,16 +4,24 @@ class DataModel {
         this.jobs = []
         this.interviews = []
         this.users = []
+        this.Statistics = {}
     }
 
-    
+    getUsersNotYetBeenInterviewed =async function(){
+        const data = await $.get('/usersNotYetBeenInterviewed')
+        console.log(data);
+    }
     getAllUsers = async function () {
-        const data =await  $.get('/users')
+        let status = "ALL";
+        let cycle = "ALL";
+        const data =await  $.get(`/users/${status}/${cycle}`)
+        this.Statistics = data.pop()
         this.users = data;
     }
 
     getUsers = async function (status , cycle ) {
         const data =await  $.get(`/users/${status}/${cycle}`)
+        this.Statistics = data.pop()
         this.users = data;
     }
 

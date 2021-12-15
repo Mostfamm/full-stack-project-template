@@ -17,7 +17,6 @@
 </head>
 
 <body>
-
   <script id="logIn-template" type="text/x-handlebars-template">
 
         <div class="logInFormat">  
@@ -99,7 +98,13 @@
 
 
   <script id="user-template" type="text/x-handlebars-template">
+
+    <div id="header">
+    <img width="400" height="380" src="https://elevation.ac/wp-content/uploads/2021/04/Elevation_למידה_והכשרות_לארגונים.png" class="attachment-full size-full" alt="" srcset="https://elevation.ac/wp-content/uploads/2021/04/Elevation_למידה_והכשרות_לארגונים.png 924w, https://elevation.ac/wp-content/uploads/2021/04/Elevation_למידה_והכשרות_לארגונים-300x287.png 300w, https://elevation.ac/wp-content/uploads/2021/04/Elevation_למידה_והכשרות_לארגונים-768x735.png 768w" sizes="(max-width: 924px) 100vw, 924px">
     <button class="addNewJob" >Add a new job</button>
+    <img width="100" height="100" src="data:image/png;base64,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">
+  </div>
+
     <div class="Popup">
       <div class="formPopup" id="popupForm">
         <div  class="formContainer" >
@@ -127,6 +132,7 @@
 
 
 
+
     <div class="Popup" >
       <div class="formPopup" id="popupForm2">
         <div  class="formContainer" >
@@ -150,20 +156,23 @@
   
           <div class="links">
             <div class="link">
-              <h2>CompanyName</h2>
+              <h5>Company Name</h5>
+              <br>
               <h2>{{CompanyName}}</h2>
             </div>
             <div class="link">
-              <h2>JobTitle</h2>
+              <h5>Job Title</h5>
               <br>
               <h2>{{JobTitle}}</h2>
             </div>
             <div class="link">
-              <h2>Location</h2>
+              <h5>Location</h5>
+              <br>
               <h2>{{Location}}</h2>
             </div>
             <div class="link">
-              <h2>gotJob</h2>
+              <h5>got Job</h5>
+              <br>
               <h2>{{gotJob}}</h2>
             </div>
           </div>
@@ -201,7 +210,7 @@
     </main>
       {{/each}}
     
-     <!-- <div class="parent">
+      <!-- <div class="parent">
     
         <div class="ApplyingNewJob">
           <div id="addInterview"   >
@@ -281,6 +290,7 @@
         
         </script>
 
+<-->
 
         <script id="admin-template" type="text/x-handlebars-template">
           <div class="FilterBy">
@@ -289,10 +299,10 @@
                 <select name="status" id="status">
                   <option value="ALL">ALL</option>
                   <option value="student">student</option>
-                  <option value="GraduateBootcamp">Graduate bootcamp</option>
+                  <option value="Graduate bootcamp">Graduate bootcamp</option>
                   <option value="Employee">Employee</option>
                 </select>
-              <label for="cycle"><b>cycle</b></label>
+              <label for="cycle"><b>cohort</b></label>
                 <select name="status" id="status">
                   <option value="ALL">ALL</option>
                   <option value="Atidna 1">Atidna 1</option>
@@ -311,24 +321,57 @@
                 <th>first name</th>
                 <th>last name</th>
                 <th>status</th>
-                <th>cycle</th>
+                <th>cohort</th>
+                <th>company Name</th>
+                <th>last interview Type is</th>
+                
+
               </tr>
               {{#each users}}
-              <tr>
-                <td>{{firstName}}</td>
-                <td>{{lastName}}</td>
-                <td>{{status}}</td>
-                <td>{{cycle}}</td>
-              </tr>
-              {{/each}}
+      
+                  <tr>
+                    <td>{{firstName}}</td>
+                    <td>{{lastName}}</td>
+                    <td>{{status}}</td>
+                    <td>{{cycle}}</td>
+                    <td>{{companyName}}</td>
+                    <td>{{interviewType}}</td>
+                    <td><button id="viewInterViews">View the interViews</button></td>
+                  </tr>
+                  {{/each}}
             </table>
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <h3>View users who have not yet been interviewed</h3>
+            <button id="usersNotYetBeenInterviewed">View</button>
 
           </div>
           </script>
+
+          <script id="adminStatistics-template" type="text/x-handlebars-template">
+
+            <div class="STATISTICAL DATA">
+              <h3>Statistics :  </h3>
+              <h5>students :{{Statistics.studentsAmount}} </h5>
+              <h5>Employees :{{Statistics.contUsersIsEmployee}}   </h5>
+              <h5>students In the job search  process :{{Statistics.contUsersIsNotEmployee}} </h5>
+              <h5>Students with open processes : {{Statistics.StudentsWithOpenProcesses}}</h5>
+              <h5>Students without open processes : {{Statistics.StudentsWithoutOpenProcesses}}</h5>
+
+            </div>
+          </script>
+
+
   <div class="logIn-Register"></div>
   <div class="user"></div>
   <div class="userInterview"></div>
   <div class="admin"></div>
+  <div class="AdminStatistics"></div> 
+
   <script src="./jquery/dist/jquery.js"></script>
   <script src="./handlebars/dist/handlebars.js"></script>
   <script src="DataModel.js"></script>
