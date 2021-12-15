@@ -135,7 +135,8 @@ $('.userInterview').on('click', '#fail', async function () {
     await dataModel.editInterview(interviewId,false)
     $(this).closest(".cards").find(".fail")[0].style.display = "block"
     $(this).hide();
-    $(this).closest(".card-info").find(".btnFail").hide();
+    $(this).closest(".card-info").find(".btnPass").hide();
+    $(this).closest(".carditems").find(".addNewInterview").hide();
     
 })
 

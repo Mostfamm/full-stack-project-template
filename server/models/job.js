@@ -6,6 +6,10 @@ const jobSchema = new Schema({
     JobTitle  : String,
     Location    : String,
     gotJob     : String, //enum
+    isActive : {
+        type:Boolean,
+        default:true
+    },
     interviews : [{type: Schema.Types.ObjectId, ref: 'interview'}]
 })
 

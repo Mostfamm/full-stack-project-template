@@ -190,6 +190,14 @@ router.post('/editinterview', async function (req, res) {
         
         );
        
+   }else{
+    await Interview.findOne({ _id: req.body.interviewId }, async function (err, res) {
+        jobId = res.jobId 
+        Job.findByIdAndUpdate((jobId), { isActive:false }, function (err, interview) {
+           // console.log(interview);
+        })
+    })
+
    }
 })
 
