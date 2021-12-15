@@ -375,6 +375,10 @@ main {
   .pass{
     color: green;
   }
-  .fail{
+  .failed{
     color: red;
+  }
+  
+  .none{
+    display: none;
   }

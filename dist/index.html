@@ -184,13 +184,22 @@
                   <div class="div2"> <h3>interviewDate: {{interviewDate}}</h3></div>
                   <div class="div3"> <h3>interviewerName: {{interviewerName}}</h3></div>
                   <div class="div4">
-                    <p>{{isPassed}}</p>
-                    
-                    
-                   </div>
+                    <h3  class="passed none pass" id="passed">passed</h3>
+                    <h3 id="failed" class="fail none failed">failed</h3>
+                    {{#if (isdefined isPassed)}}
+                    {{#if isPassed }}
+                      <h3 class="pass">passed</h3>
+                   {{else}}
+                       <h3 class="failed">failed</h3>
+                       {{/if}}
+                       {{/if}}
+                </div>
                   </div>
-                  <button  id="pass">pass</button> 
-                 <button  id="fail">fail</button>
+                  {{#if (isdefined isPassed)}}
+                  {{else}}
+                  <button class="btnPass" id="pass">pass</button> 
+                 <button class="btnFail" id="fail">fail</button>
+                 {{/if}}
               </div>
             </div>
                 
@@ -282,7 +291,7 @@
         </script>
 
 
-        <script id="admin-template" type="text/x-handlebars-template">
+  <script id="admin-template" type="text/x-handlebars-template">
           <div class="FilterBy">
             <div id="FilterByData" >
               <label for="status"><b>status</b></label>

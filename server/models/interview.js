@@ -9,6 +9,7 @@ const interviewSchema = new Schema({
         type: Boolean,
         default: null
     },
+    jobId : String
 })
 
 const Interview = mongoose.model("interview", interviewSchema)
