@@ -106,10 +106,5 @@ class DataModel {
                 lastName: this.userData[0].lastName
 
             })
-
-
-
     }
-
-
 }
