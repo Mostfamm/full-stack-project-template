@@ -4,10 +4,14 @@ const User = require('../models/user');
 const Job = require('../models/job');
 const Interview = require('../models/interview')
 const date = require('date-and-time');
-
 const nodemailer = require("nodemailer");
+
+
+
+
 router.get('/user/:email', function (req, res) {
     const email = req.params.email
+    req.session.email="aaa"
     User.find(({ email: email }), function (err, user) {
         res.send(user)
     })
@@ -229,7 +233,8 @@ router.post('/interview', function (req, res) {
     let interview = new Interview({
         jobId: req.body.id,
         interviewType: req.body.interviewType,
-        interviewDate:  req.body.interviewDate ,
+       interviewDate:  req.body.interviewDate,
+     // interviewDate: date.format((new Date(req.body.interviewDate)),'YYYY'),
         interviewerName: req.body.interviewerName,
         interviewDateCreated : date.format(now, 'YYYY/MM/DD HH:mm:ss') ,
         scheduledSimulationInterview : false
@@ -267,10 +272,10 @@ router.post('/editinterview', async function (req, res) {
             // console.log(err);
         }
     );
-    console.log(req.body.isPassed);
+    
     if (pased == "true") { 
         
-      //  console.log(req.body.interviewId);
+       console.log(req.body.interviewId);
         await Interview.findOne({ _id: req.body.interviewId }, async function (err, res) {
             interviewType = res.interviewType
             jobId = res.jobId 

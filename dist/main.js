@@ -119,7 +119,7 @@ $('.userInterview').on('click', '#cancel', async function () {
 
 })
 $('.userInterview').on('click', '#pass', async function () {
-    let interviewId = $(this).parent().attr('id');
+    let interviewId = $(this).parent().parent().attr('id');
     await dataModel.editInterview(interviewId,true)
     //console.log($(this).closest(".cards").find("h3").find(".paased").val());
   
@@ -130,7 +130,7 @@ $(this).closest(".card-info").find(".btnFail").hide();
    
 })
 $('.userInterview').on('click', '#fail', async function () {
-    let interviewId = $(this).parent().attr('id');
+    let interviewId = $(this).parent().parent().attr('id');
     await dataModel.editInterview(interviewId,false)
     $(this).closest(".cards").find(".fail")[0].style.display = "block"
     $(this).hide();
