@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
         interviewType: String, //enum
         interviewDateCreated : Date ,
         scheduledSimulationInterview : Boolean  ,
-        interviewDate: Date,
+        interviewDate: String,
         interviewerName: String,
         isPassed: {
             type: Boolean,
