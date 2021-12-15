@@ -5,6 +5,7 @@ const Job = require('../models/job');
 const Interview = require('../models/interview')
 const date = require('date-and-time');
 
+const nodemailer = require("nodemailer");
 router.get('/user/:email', function (req, res) {
     const email = req.params.email
     User.find(({ email: email }), function (err, user) {
@@ -48,7 +49,7 @@ User.find()
   
 })
 
-router.get('/users', function (req, res){
+router.get('/users', function (req, res) {
     User.find(({}), function (err, users) {
         res.send(users)
     })
@@ -184,7 +185,7 @@ router.post('/user', function (req, res) {
         cycle: req.body.cycle,
         mobileNo: req.body.mobileNo,
         password: req.body.password,
-        isAdmin : false
+        isAdmin: false
 
     })
     user.save()
@@ -226,7 +227,7 @@ router.get('/job/:email', function (req, res) {
 router.post('/interview', function (req, res) {
     const now = new Date();
     let interview = new Interview({
-        id: req.body.id,
+        jobId: req.body.id,
         interviewType: req.body.interviewType,
         interviewDate:  req.body.interviewDate ,
         interviewerName: req.body.interviewerName,
@@ -252,13 +253,68 @@ router.get('/interview/:id', function (req, res) {
         })
 })
 
-router.post('/editinterview', function (req,res) {
-    Interview.updateOne(
-        {_id: req.body.id},
-        {isPassed : req.body.isPassed } , function(err,affected,resp){
-         // console.log(err);
+router.post('/editinterview', async function (req, res) {
+    console.log(req.body.firstName);
+    let firstName = req.body.firstName
+    let lastName = req.body.lastName
+    let pased =req.body.isPassed+""
+    let interviewType
+    let jobId
+    let CompanyName
+    await Interview.updateOne(
+        { _id: req.body.interviewId },
+        { isPassed: req.body.isPassed },  (err, affected, resp) => {
+            // console.log(err);
         }
+    );
+    console.log(req.body.isPassed);
+    if (pased == "true") { 
+        
+      //  console.log(req.body.interviewId);
+        await Interview.findOne({ _id: req.body.interviewId }, async function (err, res) {
+            interviewType = res.interviewType
+            jobId = res.jobId 
+            await  Job.findOne({ _id:jobId }, (err, res)=> {
+
+                CompanyName = res.CompanyName
+                let transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: 'elevation744',
+                        pass: 'Atedna4!@#'
+                    }
+                });
+                let mailOptions = {
+                    from: 'elevation744@gmail.com',
+                    to: 'elevation744@gmail.com',
+                    subject: 'another student pass interview',
+                    text: firstName + " " + lastName + " passed "+interviewType+" interview in "+CompanyName
+                };
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log('Email sent: ' + info.response);
+                    }
+                })
+    
+            }
+            );            
+        }
+        
         );
+       
+   }else{
+    await Interview.findOne({ _id: req.body.interviewId }, async function (err, res) {
+        jobId = res.jobId 
+        Job.findByIdAndUpdate((jobId), { isActive:false }, function (err, interview) {
+           // console.log(interview);
+        })
+    })
+
+   }
 })
+
+
 
 module.exports = router

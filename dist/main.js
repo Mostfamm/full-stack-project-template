@@ -121,12 +121,22 @@ $('.userInterview').on('click', '#cancel', async function () {
 $('.userInterview').on('click', '#pass', async function () {
     let interviewId = $(this).parent().attr('id');
     await dataModel.editInterview(interviewId,true)
-    
+    //console.log($(this).closest(".cards").find("h3").find(".paased").val());
+  
+$(this).closest(".cards").find(".passed")[0].style.display = "block"
+$(this).hide();
+$(this).closest(".card-info").find(".btnFail").hide();
+
+   
 })
 $('.userInterview').on('click', '#fail', async function () {
     let interviewId = $(this).parent().attr('id');
     await dataModel.editInterview(interviewId,false)
-   console.log("fail");
+    $(this).closest(".cards").find(".fail")[0].style.display = "block"
+    $(this).hide();
+    $(this).closest(".card-info").find(".btnPass").hide();
+    $(this).closest(".carditems").find(".addNewInterview").hide();
+    
 })
 
 
@@ -145,7 +155,9 @@ $('.admin').on('click','#usersNotYetBeenInterviewed' , async function() {
     renderer.emptyView();
     renderer.viewAdmin(dataModel.users);
 })
-
+Handlebars.registerHelper('isdefined', function (value) {
+    return value !== null;
+  });
 
 
 loadPage();

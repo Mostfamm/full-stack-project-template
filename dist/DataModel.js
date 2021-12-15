@@ -96,13 +96,20 @@ class DataModel {
 
     }
     /****************************************************************************************************** */
-    editInterview = async function (id, isPassed) {
-        $.post(`/editinterview`,
+
+    editInterview = async function (interviewId, isPassed) {
+            $.post(`/editinterview`,
             {
-                id: id,
-                isPassed: isPassed
+                interviewId: interviewId,
+                isPassed: isPassed,
+                firstName: this.userData[0].firstName,
+                lastName: this.userData[0].lastName
 
             })
+
+
+
     }
+
 
 }
