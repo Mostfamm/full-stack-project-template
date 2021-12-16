@@ -27,7 +27,6 @@ User.find()
              { path: 'interviews' }
          ]
     }).exec(function (err, user) {
-        console.log(user)
         let SimulationInterviewData = [];
         for(let i =0 ; i <= user.length ; i++){
             for(let j =0 ; j <= user[i].job.length ; j++){
@@ -206,7 +205,6 @@ router.post('/job', function (req, res) {
     })
 
     User.findByIdAndUpdate((req.body.id), { $push: { job: job } }, function (err, user) {
-        console.log(user);
     })
     job.save()
     res.send(job)
@@ -218,8 +216,6 @@ router.get('/job/:email', function (req, res) {
     User.findOne({ email: email })
         .populate('job')
         .exec(function (err, user) {
-            console.log(user)
-
             res.send(user.job)
         })
 
@@ -241,7 +237,6 @@ router.post('/interview', function (req, res) {
     })
 
     Job.findByIdAndUpdate((req.body.id), { $push: { interviews: interview } }, function (err, interview) {
-        console.log(interview);
     })
     interview.save()
     res.send(interview)
@@ -253,13 +248,11 @@ router.get('/interview/:id', function (req, res) {
     Job.findOne({ _id: id })
         .populate('interviews')
         .exec(function (err, job) {
-            console.log(job)
             res.send(job.interviews)
         })
 })
 
 router.post('/editinterview', async function (req, res) {
-    console.log(req.body.firstName);
     let firstName = req.body.firstName
     let lastName = req.body.lastName
     let pased =req.body.isPassed+""
@@ -274,8 +267,6 @@ router.post('/editinterview', async function (req, res) {
     );
     
     if (pased == "true") { 
-        
-       console.log(req.body.interviewId);
         await Interview.findOne({ _id: req.body.interviewId }, async function (err, res) {
             interviewType = res.interviewType
             jobId = res.jobId 

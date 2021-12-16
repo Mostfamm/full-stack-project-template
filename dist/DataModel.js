@@ -9,7 +9,6 @@ class DataModel {
 
     getUsersNotYetBeenInterviewed =async function(){
         const data = await $.get('/usersNotYetBeenInterviewed')
-        console.log(data);
     }
     getAllUsers = async function () {
         let status = "ALL";

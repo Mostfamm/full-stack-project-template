@@ -21,20 +21,19 @@ $('.logIn-Register').on('click', '#Login', async function () {
     const password = $(this).closest(".logInFormat").find("div").find("#password").val()
     await dataModel.userIsExist(email, password)
     if (dataModel.userData.length) {
-        alert("the user is exist")
-        //      window.location.href= "user.html";
         await dataModel.getJob();
         await dataModel.getInterview();
         renderer.emptyView();
-        if(dataModel.userData[0].isAdmin){
+        if (dataModel.userData[0].isAdmin) {
             await dataModel.getAllUsers()
-            renderer.viewAdmin(dataModel.users , dataModel.Statistics);
-        }else{
-            renderer.viewUser(dataModel.jobs); 
+            renderer.viewAdmin(dataModel.users, dataModel.Statistics);
+        } else {
+            renderer.viewUser(dataModel.jobs);
         }
 
-    }else{
-        alert("the user is not exist")
+    } else {
+        document.getElementById("wrong").style.display = "block";
+
     }
 })
 
@@ -50,15 +49,16 @@ $('.logIn-Register').on('click', '#registerbtn', async function () {
     const password = $(this).closest(".RegisterFormat").find("div").find("#password").val()
 
     if (firstName == "" || lastName == "" || email == "" || mobile == "" || password == "") {
-        alert("the inputs is require ")
+        document.getElementById("req").style.display = "block";
+
     }
     else {
         await dataModel.emailIsExist(email);
         if (dataModel.userData.length) {
-            alert("the user is exist , pleace select different email")
+            document.getElementById("req").style.display = "block";
+            document.getElementById("req").innerHTML = "the user is exist , pleace select different email"
         } else {
             await dataModel.saveUser(firstName, lastName, email, status, cycle, mobile, password)
-            alert(" welcome to App !!!")
             renderer.emptyView();
             renderer.viewLogIn();
         }
@@ -73,7 +73,8 @@ $('.userInterview').on('click', '#Apply', async function () {
     const Location = $(this).closest(".Popup").find("div").find("#Location").val()
     const gotJob = $(this).closest(".Popup").find("div").find("select")[0].value
     if (CompanyName == "" || JobTitle == "" || Location == "" || gotJob == "") {
-        alert("the inputs is require ")
+
+        document.getElementById("reqJob").style.display = "block";
     }
     else {
         await dataModel.saveJob(CompanyName, JobTitle, Location, gotJob);
@@ -88,7 +89,7 @@ $('.userInterview').on('click', '#ApplyInterview', async function () {
     const interviewDate = $(this).closest(".Popup").find("div").find("#interviewDate").val()
     const interviewerName = $(this).closest(".Popup").find("div").find("#interviewerName").val()
     if (interviewType == "" || interviewDate == "" || interviewerName == "") {
-        alert("the inputs is require ")
+        document.getElementById("reqInterview").style.display = "block";
     }
     else {
         await dataModel.saveInterview(jobId, interviewType, interviewDate, interviewerName);
@@ -98,10 +99,13 @@ $('.userInterview').on('click', '#ApplyInterview', async function () {
     }
 
 })
+$('.userInterview').on('click', '#logOut', async function () {
+        renderer.emptyView();
+    renderer.viewLogIn()
+})
 
 $('.userInterview').on('click', '.addNewInterview', async function () {
     jobId = $(this).parent().attr('id');
-    console.log(jobId);
     document.getElementById("popupForm2").style.display = "block";
 
 })
@@ -120,36 +124,34 @@ $('.userInterview').on('click', '#cancel', async function () {
 })
 $('.userInterview').on('click', '#pass', async function () {
     let interviewId = $(this).parent().parent().attr('id');
-    await dataModel.editInterview(interviewId,true)
-    //console.log($(this).closest(".cards").find("h3").find(".paased").val());
-  
-$(this).closest(".cards").find(".passed")[0].style.display = "block"
-$(this).hide();
-$(this).closest(".card-info").find(".btnFail").hide();
+    await dataModel.editInterview(interviewId, true)
+    $(this).closest(".cards").find(".passed")[0].style.display = "block"
+    $(this).hide();
+    $(this).closest(".card-info").find(".btnFail").hide();
 
-   
+
 })
 $('.userInterview').on('click', '#fail', async function () {
     let interviewId = $(this).parent().parent().attr('id');
-    await dataModel.editInterview(interviewId,false)
+    await dataModel.editInterview(interviewId, false)
     $(this).closest(".cards").find(".fail")[0].style.display = "block"
     $(this).hide();
     $(this).closest(".card-info").find(".btnPass").hide();
     $(this).closest(".carditems").find(".addNewInterview").hide();
-    
+
 })
 
 
-$('.admin').on('click','#getUserData' , async function() {
+$('.admin').on('click', '#getUserData', async function () {
     const status = $(this).closest(".FilterBy").find("div").find("select")[0].value
     const cycle = $(this).closest(".FilterBy").find("div").find("select")[1].value
 
-    await dataModel.getUsers(status , cycle );
+    await dataModel.getUsers(status, cycle);
     renderer.emptyView();
-    renderer.viewAdmin(dataModel.users , dataModel.Statistics);
+    renderer.viewAdmin(dataModel.users, dataModel.Statistics);
 })
 
-$('.admin').on('click','#usersNotYetBeenInterviewed' , async function() {
+$('.admin').on('click', '#usersNotYetBeenInterviewed', async function () {
 
     await dataModel.getUsersNotYetBeenInterviewed();
     renderer.emptyView();
@@ -157,7 +159,7 @@ $('.admin').on('click','#usersNotYetBeenInterviewed' , async function() {
 })
 Handlebars.registerHelper('isdefined', function (value) {
     return value !== null;
-  });
+});
 
 
 loadPage();
