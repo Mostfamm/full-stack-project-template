@@ -125,6 +125,11 @@ $('.userInterview').on('click', '.addNewInterview', async function () {
     document.getElementById("popupForm2").style.display = "block";
 
 })
+$('.userInterview').on('click', '#logOut', async function () {
+    renderer.emptyView();
+    renderer.viewLogIn(); 
+
+})
 $('.userInterview').on('click', '#cancel2', async function () {
     document.getElementById("popupForm2").style.display = "none";
 
