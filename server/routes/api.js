@@ -63,21 +63,69 @@ function createArrayToViewAdminTable(user){
     let contUsersIsEmployee =0;
     let contUsersIsNotEmployee =0;
     let StudentsWithOpenProcesses=0
+    let StudentsWithoutOpenProcesses = 0
+    let contUsersIsEmployeeInPercent =0;
+    let contUsersIsNotEmployeeInPercent =0;
+    let StudentsWithOpenProcessesInPercent=0
+    let StudentsWithoutOpenProcessesInPercent = 0
+    let userLength = 0;
+    for (let index = 0; index < user.length; index++) {
+        if(user[index].firstName == "admin"){
+            userLength = user.length-1;
+            break;
+        }
+        if (index == user.length-1){
+            userLength = user.length
+        }
+    }
+     
+    
     for(let i=0 ; i < user.length ; i++){
 
         for(let j=0 ; j < user[i].job.length ; j++){
            
             if(user[i].firstName != "admin")
-            obj = {
-                firstName : user[i].firstName , 
-                lastName :  user[i].lastName ,
-                email : user[i].email ,
-                status :    user[i].status ,
-                cycle :     user[i].cycle ,
-                companyName :user[i].job[j]._doc.CompanyName ,
-                interviewType :   user[i].job[j].interviews[0]._doc.interviewType
-            }
-            users.push(obj);
+                if(user[i].job[j].interviews.length > 0){
+                    for(let k=0 ; k < user[i].job[j].interviews.length ; k++){
+
+                    
+                        let isPassed  
+                        if(user[i].job[j].interviews[k]._doc.isPassed == null){
+                            isPassed = "The interview has not yet taken place or there is still no answer"
+                        }else if(user[i].job[j].interviews[k]._doc.isPassed == true){
+                            isPassed = "pass"
+                        }else {
+                            isPassed = "failed"
+                        }
+
+                        obj = {
+                            firstName : user[i].firstName , 
+                            lastName :  user[i].lastName ,
+                            email : user[i].email ,
+                            interViewDate : user[i].job[j].interviews[k]._doc.interviewDate ,
+                            isPassed : isPassed ,
+                            status :    user[i].status ,
+                            cycle :     user[i].cycle ,
+                            companyName :user[i].job[j]._doc.CompanyName ,
+                            interviewType :   user[i].job[j].interviews[k]._doc.interviewType
+                        }
+                        users.push(obj);
+                    }
+                }else{
+                    obj = {
+                        firstName : user[i].firstName , 
+                        lastName :  user[i].lastName ,
+                        email : user[i].email ,
+                        isPassed : " - " ,
+                        interViewDate : " - " ,
+                        status :    user[i].status ,
+                        cycle :     user[i].cycle ,
+                        companyName :user[i].job[j]._doc.CompanyName ,
+                        interviewType :   "No interview scheduled"
+                    }
+                    users.push(obj);
+                }
+            
         }
         
     }
@@ -90,23 +138,30 @@ function createArrayToViewAdminTable(user){
                 contUsersIsNotEmployee++;
             }
             for(let j=0 ; j < user[i].job.length ; j++){
-            /*   
-                if(user[i].job[j].isActive == "true"){
+               
+                if(user[i].job[j].isActive && user[i].status != "Employee"){
                     StudentsWithOpenProcesses++;
                     break;
                 }
-            */
+            
+            }
+            StudentsWithoutOpenProcesses = userLength -  StudentsWithOpenProcesses -contUsersIsEmployee
+
+     
+            }
+            contUsersIsEmployeeInPercent =(contUsersIsEmployee/(userLength)*100).toFixed(2)
+            contUsersIsNotEmployeeInPercent =(contUsersIsNotEmployee/(userLength)*100).toFixed(2)
+            StudentsWithOpenProcessesInPercent=(StudentsWithOpenProcesses/contUsersIsNotEmployee*100).toFixed(2)
+            StudentsWithoutOpenProcessesInPercent =(StudentsWithoutOpenProcesses/contUsersIsNotEmployee*100).toFixed(2)
+
+            StatisticsObj = { 
+                studentsAmount : userLength ,
+                contUsersIsEmployee : contUsersIsEmployee + "  |  " +  contUsersIsEmployeeInPercent +" %",
+                contUsersIsNotEmployee : contUsersIsNotEmployee + "  |  " +  contUsersIsNotEmployeeInPercent +" %",
+                StudentsWithOpenProcesses :StudentsWithOpenProcesses +  "  |  " + StudentsWithOpenProcessesInPercent + " %",
+                StudentsWithoutOpenProcesses : StudentsWithoutOpenProcesses  +  "  |  " + StudentsWithoutOpenProcessesInPercent + " %"
             }
         }
-    }
-    StatisticsObj = { 
-        studentsAmount : user.length ,
-        contUsersIsEmployee : contUsersIsEmployee ,
-        contUsersIsNotEmployee : contUsersIsNotEmployee,
-        StudentsWithOpenProcesses :StudentsWithOpenProcesses,
-        StudentsWithoutOpenProcesses : contUsersIsEmployee - StudentsWithOpenProcesses
-    }
-
     users.push(StatisticsObj);
     return users
 }
