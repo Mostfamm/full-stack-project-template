@@ -42,9 +42,8 @@ class Renderer {
     viewAdmin(users , Statistics){
         let someHTML = this.templateAdmin({users} );
         let someHTML1 = this.templateAdminStatistics({Statistics});
-
-        this.elementAdmin.append(someHTML  ); 
         this.elementAdminStatistics.append(someHTML1 ); 
+        this.elementAdmin.append(someHTML  ); 
 
         
     }

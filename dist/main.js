@@ -120,7 +120,7 @@ $('.userInterview').on('click', '#cancel', async function () {
 })
 $('.userInterview').on('click', '#pass', async function () {
     let interviewId = $(this).parent().parent().attr('id');
-    await dataModel.editInterview(interviewId,true)
+    await dataModel.editInterview(interviewId,true ,"pass")
     //console.log($(this).closest(".cards").find("h3").find(".paased").val());
   
 $(this).closest(".cards").find(".passed")[0].style.display = "block"
@@ -129,22 +129,23 @@ $(this).closest(".card-info").find(".btnFail").hide();
 
    
 })
+
 $('.userInterview').on('click', '#fail', async function () {
     let interviewId = $(this).parent().parent().attr('id');
-    await dataModel.editInterview(interviewId,false)
+    await dataModel.editInterview(interviewId,false , 'fail')
     $(this).closest(".cards").find(".fail")[0].style.display = "block"
     $(this).hide();
     $(this).closest(".card-info").find(".btnPass").hide();
-    $(this).closest(".carditems").find(".addNewInterview").hide();
-    
+    $(this).closest(".carditems").find(".addNewInterview").hide();   
 })
 
 
 $('.admin').on('click','#getUserData' , async function() {
-    const status = $(this).closest(".FilterBy").find("div").find("select")[0].value
-    const cycle = $(this).closest(".FilterBy").find("div").find("select")[1].value
+    const interViewStatus = $(this).closest(".FilterBy").find("div").find("#InterViewStatus").val()
+    const userStatus = $(this).closest(".FilterBy").find("div").find("#UserStatus").val()
+    const cohort = $(this).closest(".FilterBy").find("div").find("#cohort").val()
 
-    await dataModel.getUsers(status , cycle );
+    await dataModel.getUsers(interViewStatus, userStatus , cohort );
     renderer.emptyView();
     renderer.viewAdmin(dataModel.users , dataModel.Statistics);
 })

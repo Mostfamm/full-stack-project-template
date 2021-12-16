@@ -12,15 +12,16 @@ class DataModel {
         console.log(data);
     }
     getAllUsers = async function () {
-        let status = "ALL";
-        let cycle = "ALL";
-        const data =await  $.get(`/users/${status}/${cycle}`)
+        let userStatus = "ALL";
+        let cohort = "ALL";
+        let interViewStatus = "ALL"
+        const data =await  $.get(`/users/${userStatus}/${cohort}/${interViewStatus}`)
         this.Statistics = data.pop()
         this.users = data;
     }
 
-    getUsers = async function (status , cycle ) {
-        const data =await  $.get(`/users/${status}/${cycle}`)
+    getUsers = async function ( interViewStatus, userStatus , cohort ) {
+        const data =await  $.get(`/users/${userStatus}/${cohort}/${interViewStatus}`)
         this.Statistics = data.pop()
         this.users = data;
     }
@@ -97,11 +98,12 @@ class DataModel {
     }
     /****************************************************************************************************** */
 
-    editInterview = async function (interviewId, isPassed) {
+    editInterview = async function (interviewId, isPassed , status) {
             $.post(`/editinterview`,
             {
                 interviewId: interviewId,
                 isPassed: isPassed,
+                status : status ,
                 firstName: this.userData[0].firstName,
                 lastName: this.userData[0].lastName
 

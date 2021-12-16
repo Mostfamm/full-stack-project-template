@@ -233,69 +233,113 @@
 
 
   <script id="admin-template" type="text/x-handlebars-template">
-          <div class="FilterBy">
-            <div id="FilterByData" >
-              <label for="status"><b>status</b></label>
-                <select name="status" id="status">
-                  <option value="ALL">ALL</option>
-                  <option value="student">student</option>
-                  <option value="Graduate bootcamp">Graduate bootcamp</option>
-                  <option value="Employee">Employee</option>
-                </select>
-              <label for="cycle"><b>cohort</b></label>
-                <select name="status" id="status">
-                  <option value="ALL">ALL</option>
-                  <option value="Atidna 1">Atidna 1</option>
-                  <option value="Atidna 2">Atidna 2</option>
-                  <option value="Atidna 3">Atidna 3</option>
-                  <option value="Atidna 4">Atidna 4</option>
-                </select>  
-              <button id="getUserData">search !</button>
-            </div>              
-          </div>
-          <div class="div2">           
-            <table style="float:left">
-              <tr>
-                <th>first name</th>
-                <th>last name</th>
-                <th>status</th>
-                <th>cohort</th>
-                <th>company Name</th>
-                <th>last interview Type is</th>
-                <th>interView Date</th>
-                <th>isPassed</th>
-                
 
-              </tr>
-              {{#each users}}
+          <div class="div2">
+            
+
+            <div class="limiter">
+              <div class="container-table100">
+                <div class="wrap-table100">
+                  <div class="table100 ver1 m-b-110">
+                    <div class="table100-head">
+                      <table>
+                        <thead>
+                          <tr class="row100 head">
+                            <th class="cell100 column1">FIRST  NAME</th>
+                            <th class="cell100 column2">LAST  NAME</th>
+                            <th class="cell100 column4">COHORT</th>
+                            <th class="cell100 column5">COMPANY</th>
+                            <th class="cell100 column6">PHASE</th>
+                            <th class="cell100 column7">DATE</th>
+                            <th class="cell100 column8">STATUS</th>
+                          </tr>
+                        </thead>
+                      </table>
+                    </div>
+          
+                    <div class="table100-body js-pscroll">
+                      <table>
+                        <tbody>
+                          {{#each users}}
       
-                  <tr>
-                    <td>{{firstName}}</td>
-                    <td>{{lastName}}</td>
-                    <td>{{status}}</td>
-                    <td>{{cycle}}</td>
-                    <td>{{companyName}}</td>
-                    <td>{{interviewType}}</td>
-                    <td>{{interViewDate}}</td>
-                    <td>{{isPassed}}</td>
-                    <!-- <td><button id="viewInterViews">View the interViews</button></td> -->
-                  </tr>
-                  {{/each}}
-            </table>
+                              <tr class="row100 body">
+                                <td class="cell100 column1" >{{firstName}}</td>
+                                <td class="cell100 column2">{{lastName}}</td>
+                                <td class="cell100 column4">{{cycle}}</td>
+                                <td class="cell100 column5">{{companyName}}</td>
+                                <td class="cell100 column6">{{interviewType}}</td>
+                                <td class="cell100 column7">{{interViewDate}}</td>
+                                <td class="cell100 column8">{{interViewStatus}}</td>
+                                
+                              </tr>
+                          {{/each}}
+ 
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+            
 
           </div>
           </script>
 
           <script id="adminStatistics-template" type="text/x-handlebars-template">
+            <div class="FilterBy">
+              <div id="FilterByData" >
+                <center> 
+                  <label for="status"><b>InterView Status</b></label>
+                  <select name="InterViewStatus" id="InterViewStatus">
+                    <option value="ALL">ALL</option>
+                    <option value="schuling">schuling</option>
+                    <option value="pass">pass</option>
+                    <option value="fail">fail</option>
+                    <option value="pading">pading</option>
 
+                  </select>
+                  <label for="status"><b>User Status</b></label>
+                    <select name="UserStatus" id="UserStatus">
+                      <option value="ALL">ALL</option>
+                      <option value="student">student</option>
+                      <option value="Graduate bootcamp">Graduate bootcamp</option>
+                      <option value="Employee">Employee</option>
+                    </select>
+                  <label for="cohort"><b>cohort</b></label>
+                    <select name="cohort" id="cohort">
+                      <option value="ALL">ALL</option>
+                      <option value="Atidna 1">Atidna 1</option>
+                      <option value="Atidna 2">Atidna 2</option>
+                      <option value="Atidna 3">Atidna 3</option>
+                      <option value="Atidna 4">Atidna 4</option>
+                    </select>  
+                  <button id="getUserData">search !</button></div>
+                </center>
+              </div>              
+            </div>
             <div class="STATISTICAL DATA">
-              <h3>Statistics :  </h3>
-              <h5>students :{{Statistics.studentsAmount}} </h5>
-              <h5>Employees :{{Statistics.contUsersIsEmployee}}   </h5>
-              <h5>Not Yet Employee :{{Statistics.contUsersIsNotEmployee}} </h5>
-              <h5>with open processes : {{Statistics.StudentsWithOpenProcesses}}</h5>
-              <h5>without open processes : {{Statistics.StudentsWithoutOpenProcesses}}</h5>
-              <div role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="--value:60"></div>
+
+              
+              <h1>Statistics :  </h1>
+              <h5>#Students :{{Statistics.studentsAmount}} </h5>
+              <br>
+              <div class="progressbar">
+                <div class="progressbar1">
+                  <div role="progressbar" aria-valuenow={{Statistics.contUsersIsEmployeeInPercent}} aria-valuemin="0" aria-valuemax="100" style="--value:{{Statistics.contUsersIsEmployeeInPercent}}"></div>
+                  <h5>Employed  :{{Statistics.contUsersIsEmployee}}   </h5>
+                </div>
+                <div class="progressbar2">
+                  <div role="progressbar" aria-valuenow={{Statistics.contUsersIsNotEmployeeInPercent}} aria-valuemin="0" aria-valuemax="100" style="--value:{{Statistics.contUsersIsNotEmployeeInPercent}}"></div>
+                  <h5>UnEmployed :{{Statistics.contUsersIsNotEmployee}} </h5>
+                </div>
+                <div class="progressbar3">
+                  <div role="progressbar" aria-valuenow={{Statistics.StudentsWithOpenProcessesInPercent}} aria-valuemin="0" aria-valuemax="100" style="--value:{{Statistics.StudentsWithOpenProcessesInPercent}}"></div>
+                  <h5>In Process : {{Statistics.StudentsWithOpenProcesses}}</h5>
+                </div>
+                <div class="progressbar4">
+                  <div role="progressbar" aria-valuenow={{Statistics.StudentsWithoutOpenProcessesInPercent}} aria-valuemin="0" aria-valuemax="100" style="--value:{{Statistics.StudentsWithoutOpenProcessesInPercent}}"></div>
+                  <h5>Not Active : {{Statistics.StudentsWithoutOpenProcesses}}</h5>
+                </div>
+              </div>
+
             </div>
           </script>
 

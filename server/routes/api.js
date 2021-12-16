@@ -59,7 +59,7 @@ router.get('/users', function (req, res) {
     })
 })
 
-function createArrayToViewAdminTable(user){
+function createArrayToViewAdminTable(user ,interViewStatus){
     let users =[]
     let contUsersIsEmployee =0;
     let contUsersIsNotEmployee =0;
@@ -70,15 +70,7 @@ function createArrayToViewAdminTable(user){
     let StudentsWithOpenProcessesInPercent=0
     let StudentsWithoutOpenProcessesInPercent = 0
     let userLength = 0;
-    for (let index = 0; index < user.length; index++) {
-        if(user[index].firstName == "admin"){
-            userLength = user.length-1;
-            break;
-        }
-        if (index == user.length-1){
-            userLength = user.length
-        }
-    }
+    
      
     
     for(let i=0 ; i < user.length ; i++){
@@ -86,61 +78,92 @@ function createArrayToViewAdminTable(user){
         for(let j=0 ; j < user[i].job.length ; j++){
            
             if(user[i].firstName != "admin")
+            
+            for(let k=0 ; k < user[i].job[j].interviews.length ; k++){
                 if(user[i].job[j].interviews.length > 0){
-                    for(let k=0 ; k < user[i].job[j].interviews.length ; k++){
+                
+                
 
-                    
-                        let isPassed  
-                        if(user[i].job[j].interviews[k]._doc.isPassed == null){
-                            isPassed = "The interview has not yet taken place or there is still no answer"
-                        }else if(user[i].job[j].interviews[k]._doc.isPassed == true){
-                            isPassed = "pass"
-                        }else {
-                            isPassed = "failed"
+                        if(user[i].job[j].interviews[k]._doc.status == interViewStatus || interViewStatus =="ALL")
+                        {
+
+                            let status  
+                            if(user[i].job[j].interviews[k]._doc.status == 'pass'){
+                                status = "pass"
+                            }else if(user[i].job[j].interviews[k]._doc.status == 'fail'){
+                                status = "fail"
+                            }else if(user[i].job[j].interviews[k]._doc.status == 'schuling'){
+                                status = "schuling"
+                            }else if(user[i].job[j].interviews[k]._doc.status == 'pading'){
+                                status = "pading"
+                            }
+
+                            obj = {
+                                firstName : user[i].firstName , 
+                                lastName :  user[i].lastName ,
+                                email : user[i].email ,
+                                interViewDate : user[i].job[j].interviews[k]._doc.interviewDate ,
+                                interViewStatus : status ,
+                                status :    user[i].status ,
+                                cycle :     user[i].cycle ,
+                                companyName :user[i].job[j]._doc.CompanyName ,
+                                interviewType :   user[i].job[j].interviews[k]._doc.interviewType
+                            }
+                            users.push(obj);
                         }
-
+                    
+                }else{
+                    if(user[i].job[j].interviews[k]._doc.status == interViewStatus || interViewStatus =="ALL")
+                    {
                         obj = {
                             firstName : user[i].firstName , 
                             lastName :  user[i].lastName ,
                             email : user[i].email ,
-                            interViewDate : user[i].job[j].interviews[k]._doc.interviewDate ,
-                            isPassed : isPassed ,
+                            isPassed : " / " ,
+                            interViewDate : " / " ,
+                            interViewStatus : "schuling" ,
                             status :    user[i].status ,
                             cycle :     user[i].cycle ,
                             companyName :user[i].job[j]._doc.CompanyName ,
-                            interviewType :   user[i].job[j].interviews[k]._doc.interviewType
+                            interviewType :   "No interviews"
                         }
                         users.push(obj);
                     }
-                }else{
-                    obj = {
-                        firstName : user[i].firstName , 
-                        lastName :  user[i].lastName ,
-                        email : user[i].email ,
-                        isPassed : " - " ,
-                        interViewDate : " - " ,
-                        status :    user[i].status ,
-                        cycle :     user[i].cycle ,
-                        companyName :user[i].job[j]._doc.CompanyName ,
-                        interviewType :   "No interview scheduled"
-                    }
-                    users.push(obj);
                 }
-            
+            }
         }
         
     }
-    for(let i=0 ; i < user.length ; i++){
+    let tempuser = [];
+    for(let i = 0 ; i < user.length ; i++){
+        for(let j=0; j<users.length;j++){
+            if(user[i].email ==users[j].email)
+            {
+            tempuser.push(user[i]);
+            break;
+            }
+        }
+    }
+    for (let index = 0; index < tempuser.length; index++) {
+        if(tempuser[index].firstName == "admin"){
+            userLength = tempuser.length-1;
+            break;
+        }
+        if (index == tempuser.length-1){
+            userLength = tempuser.length
+        }
+    }
+    for(let i=0 ; i < tempuser.length ; i++){
         
-        if(user[i].firstName != "admin"){
-            if(user[i].status == "Employee"){
+        if(tempuser[i].firstName != "admin"){
+            if(tempuser[i].status == "Employee"){
                 contUsersIsEmployee++;
             }else{
                 contUsersIsNotEmployee++;
             }
-            for(let j=0 ; j < user[i].job.length ; j++){
+            for(let j=0 ; j < tempuser[i].job.length ; j++){
                
-                if(user[i].job[j].isActive && user[i].status != "Employee"){
+                if(tempuser[i].job[j].isActive && tempuser[i].status != "Employee"){
                     StudentsWithOpenProcesses++;
                     break;
                 }
@@ -150,27 +173,32 @@ function createArrayToViewAdminTable(user){
 
      
             }
-            contUsersIsEmployeeInPercent =(contUsersIsEmployee/(userLength)*100).toFixed(2)
-            contUsersIsNotEmployeeInPercent =(contUsersIsNotEmployee/(userLength)*100).toFixed(2)
-            StudentsWithOpenProcessesInPercent=(StudentsWithOpenProcesses/contUsersIsNotEmployee*100).toFixed(2)
-            StudentsWithoutOpenProcessesInPercent =(StudentsWithoutOpenProcesses/contUsersIsNotEmployee*100).toFixed(2)
+            contUsersIsEmployeeInPercent =parseInt((contUsersIsEmployee/(userLength)*100).toFixed(2))
+            contUsersIsNotEmployeeInPercent =parseInt((contUsersIsNotEmployee/(userLength)*100).toFixed(2))
+            StudentsWithOpenProcessesInPercent=parseInt((StudentsWithOpenProcesses/contUsersIsNotEmployee*100).toFixed(2))
+            StudentsWithoutOpenProcessesInPercent =parseInt((StudentsWithoutOpenProcesses/contUsersIsNotEmployee*100).toFixed(2))
 
             StatisticsObj = { 
                 studentsAmount : userLength ,
-                contUsersIsEmployee : contUsersIsEmployee + "  |  " +  contUsersIsEmployeeInPercent +" %",
-                contUsersIsNotEmployee : contUsersIsNotEmployee + "  |  " +  contUsersIsNotEmployeeInPercent +" %",
-                StudentsWithOpenProcesses :StudentsWithOpenProcesses +  "  |  " + StudentsWithOpenProcessesInPercent + " %",
-                StudentsWithoutOpenProcesses : StudentsWithoutOpenProcesses  +  "  |  " + StudentsWithoutOpenProcessesInPercent + " %"
+                contUsersIsEmployee : contUsersIsEmployee ,
+                contUsersIsNotEmployee : contUsersIsNotEmployee ,
+                StudentsWithOpenProcesses :StudentsWithOpenProcesses ,
+                StudentsWithoutOpenProcesses : StudentsWithoutOpenProcesses ,
+                contUsersIsEmployeeInPercent : contUsersIsEmployeeInPercent,
+                contUsersIsNotEmployeeInPercent : contUsersIsNotEmployeeInPercent ,
+                StudentsWithOpenProcessesInPercent : StudentsWithOpenProcessesInPercent ,
+                StudentsWithoutOpenProcessesInPercent : StudentsWithoutOpenProcessesInPercent
             }
         }
     users.push(StatisticsObj);
     return users
 }
 
-router.get('/users/:status/:cycle', function (req, res){
-    const status = req.params.status
-    const cycle = req.params.cycle
-    if(status == "ALL" && cycle == "ALL"){
+router.get('/users/:userStatus/:cohort/:interViewStatus', function (req, res){
+    const userStatus = req.params.userStatus
+    const cohort = req.params.cohort
+    const interViewStatus = req.params.interViewStatus
+    if(userStatus == "ALL" && cohort == "ALL"){
 
         User.find({ })
         .populate({
@@ -180,12 +208,15 @@ router.get('/users/:status/:cycle', function (req, res){
             ]
        })
         .exec(function (err, user) {
-            const users = createArrayToViewAdminTable(user)
-            res.send(users)
+           
+                const users = createArrayToViewAdminTable(user , interViewStatus)
+                res.send(users)
+    
+           
         })
         
-    }else if(cycle == "ALL"){
-        User.find({ status: status})
+    }else if(cohort == "ALL"){
+        User.find({ status: userStatus})
         .populate({
             path    : 'job',
             populate: [
@@ -193,12 +224,14 @@ router.get('/users/:status/:cycle', function (req, res){
             ]
        })
         .exec(function (err, user) {
-            const users = createArrayToViewAdminTable(user)
-            res.send(users)
+                          
+               
+                const users = createArrayToViewAdminTable(user ,interViewStatus)
+                res.send(users)
         })
 
-    } else if(status == "ALL"){
-        User.find({ cycle: cycle})
+    } else if(userStatus == "ALL"){
+        User.find({ cycle: cohort})
         .populate({
             path    : 'job',
             populate: [
@@ -206,13 +239,13 @@ router.get('/users/:status/:cycle', function (req, res){
             ]
        })
         .exec(function (err, user) {
-            const users = createArrayToViewAdminTable(user)
+            const users = createArrayToViewAdminTable(user ,interViewStatus)
             res.send(users)
         })
 
     }else {
        
-        User.find({ status: status, cycle: cycle})
+        User.find({ status: userStatus, cycle: cohort})
         .populate({
             path    : 'job',
             populate: [
@@ -220,7 +253,7 @@ router.get('/users/:status/:cycle', function (req, res){
             ]
        })
         .exec(function (err, user) {
-            const users = createArrayToViewAdminTable(user)
+            const users = createArrayToViewAdminTable(user ,interViewStatus)
             res.send(users)
         })     
     }
@@ -321,9 +354,11 @@ router.post('/editinterview', async function (req, res) {
     let interviewType
     let jobId
     let CompanyName
+    let status = req.body.status
     await Interview.updateOne(
         { _id: req.body.interviewId },
-        { isPassed: req.body.isPassed },  (err, affected, resp) => {
+        { isPassed: req.body.isPassed ,status:status },
+          (err, affected, resp) => {
             // console.log(err);
         }
     );

@@ -7,11 +7,13 @@ const Schema = mongoose.Schema
         scheduledSimulationInterview : Boolean  ,
         interviewDate: String,
         interviewerName: String,
-        isPassed: {
+        isPassed: {    
             type: Boolean,
-        default: null
-    },
-    jobId : String
+        default: null },
+        status :{ type: String,
+        enum : ['schuling' , 'pass' , 'fail' , 'pading'],
+        default: 'schuling'},
+        jobId : String
 })
 
 const Interview = mongoose.model("interview", interviewSchema)
